@@ -9,6 +9,15 @@ header, main, footer {
     margin: auto;
 }
 
+footer {
+    padding-top: 2em;
+    color: #777777;
+}
+
+footer a {
+    color: lightblue;
+}
+
 .container {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto
@@ -27,4 +36,8 @@ header, main, footer {
 
 .snake {
     background-color: #FFFFFF;
+}
+
+main > div span {
+    padding-right: 1em;
 }
