@@ -1,34 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Vi Snake</title>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <script src="/static/snake.js"></script>
-</head>
-<body>
-<header>
-    <h1>Vi Snake</h1>
-</header>
-<main>
-    <div>
-        <span id="start-instructions">Press i to start</span>
-        <span id="score"></span> <span id="max-score"></span>
-    </div>
-    <!--Game to be injected by JS-->
-    <article>
-        <h3>How to play</h3>
-        <p>
-            This game works similar to the snake game on old Nokia phones.
-            The difference is that it uses <code>h, j, k, l</code> keys to
-            move the snake.
-        </p>
-    </article>
-</main>
-<footer>
-    Made by Christian Fosli, using Flask/Python and Javascript. Source code available on
-    <a href="https://github.com/christianfosli/visnake">github</a>. Note that your highscore
-    is stored on the server in a "session". It's automatically deleted when you exit your
-    browser, or after 31 days.
-</footer>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+<script src="/static/snake.js"></script>
+<div>
+    <span id="start-instructions">Press i to start</span>
+    <span id="score"></span> <span id="max-score"></span>
+</div>
+<!--Game to be injected by JS-->
+<article>
+    <h3>Highscores</h3>
+    Top this month: <span id="top-score-month"></span><br>
+    Top all time: <span id="top-score-all"></span><br>
+    <a href="/highscores">Show all</a>
+</article>
+<article>
+    <h3>How to play</h3>
+    <p>
+        This game works similar to the snake game on old Nokia phones.
+        The difference is that it uses <code>h, j, k, l</code> keys to
+        move the snake.
+    </p>
+</article>
+{% endblock %}
