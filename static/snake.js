@@ -2,12 +2,17 @@ const gridSize = 16;  /* grid is gridSize x gridSize */
 const grid = mkGrid();
 const directions = { 'UP':1, 'RIGHT':2, 'DOWN':3, 'LEFT':4 }
 let score = -1;
-let maxScore = 0; //TODO: fetch max score from the server
+let maxScore = 0; // Replaced with fetch from server
 let direction = directions.RIGHT;
 let snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
 let appleAt = -1;
 let snakeSpeed = 500;
 let gameActive = false;
+
+fetch('/score').then(res => res.json()).then(data => {
+    maxScore = data.score;
+    document.getElementById('max-score').innerText = `Your max score: ${maxScore}`;
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('main').insertBefore(grid, document.querySelector('main article'));
@@ -105,6 +110,12 @@ function gameOver() {
     gameoverdiv.id = 'start-instructions';
     gameoverdiv.innerText = 'Game Over. Press i to play again';
     document.querySelector('main div').appendChild(gameoverdiv);
+    if (score >= maxScore)
+        fetch('/score', {
+            method: 'POST',
+            body: JSON.stringify({'score': score}),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => console.log(`score sent to server - status: ${res.status}`));
 }
 
 function addApple() {
@@ -126,6 +137,6 @@ function updateScore() {
     document.getElementById('score').innerText = 'Score: ' + score;
     if (score > maxScore) {
         maxScore = score;
-        document.getElementById('max-score').innerText = `(max ${maxScore})`;
+        document.getElementById('max-score').innerText = `Your max score: ${maxScore}`;
     }
 }
