@@ -59,7 +59,7 @@ function resetSnake() {
     snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
     appleAt = -1;
     snakeSpeed = 500;
-    document.querySelector('.snake').classList.remove('snake');
+    document.querySelectorAll('.snake').forEach(div => div.classList.remove('snake'));
     document.querySelector('.apple').classList.remove('apple');
 }
 
