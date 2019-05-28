@@ -1,0 +1,30 @@
+body {
+    font-family: monospace;
+    background-color: #333333;
+    color: yellowgreen;
+}
+
+header, main, footer {
+    max-width: 600px;
+    margin: auto;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto
+    auto auto auto auto auto auto;
+}
+
+.container div {
+    border: solid #555555 1px;
+    display: inline-grid;
+    height: 30px;
+}
+
+.apple {
+    background-color: yellowgreen;
+}
+
+.snake {
+    background-color: #FFFFFF;
+}
