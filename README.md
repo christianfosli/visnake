@@ -5,20 +5,18 @@ Vi Snake
 
 The website is live at
 <a href="https://visnake.azurewebsites.net/">
-https://visnake.azurewebsites.net/highscores</a>
+https://visnake.azurewebsites.net/</a>
 
 ## Dev setup
 
 **Push to master triggers build and deploy to azure**
 
-### Server
+### Server / Environment
 
-I recommend to use virtual environment:
-`python3 -m venv venv`, and `.  venv/bin/activate`.
+Set environment variables: `. ./dev_config.sh` on max/linux, or
+`.\dev_config.ps1` on windows powershell.
 
-Set environment variables:`. ./dev_config.sh`
-
-Run server: `flask run`, then open your browser at `127.0.0.1:500`
+Run server: `flask run` or `python3 app.py`, then open your browser at `127.0.0.1:500`
 
 ### Database
 
