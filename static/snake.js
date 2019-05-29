@@ -4,6 +4,7 @@ const directions = { 'UP':1, 'RIGHT':2, 'DOWN':3, 'LEFT':4 }
 let score = -1;
 let maxScore = 0; // Replaced with fetch from server
 let direction = directions.RIGHT;
+let nextDirection = directions.RIGHT;
 let snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
 let appleAt = -1;
 let snakeSpeed = 500;
@@ -20,19 +21,19 @@ function vim(key) {
     if (key == 'i' && !gameActive) startSnake();
     else if (key == 'h') {
         if (snake.length > 1 && direction === directions.RIGHT) return;
-        direction = directions.LEFT;
+        nextDirection = directions.LEFT;
     }
     else if (key == 'j') {
         if (snake.length > 1 && direction === directions.UP) return;
-        direction = directions.DOWN;
+        nextDirection = directions.DOWN;
     } 
     else if (key == 'k') {
         if (snake.length > 1 && direction === directions.DOWN) return;
-        direction = directions.UP;
+        nextDirection = directions.UP;
     }
     else if (key == 'l') {
         if (snake.length > 1 && direction === directions.LEFT) return;
-        direction = directions.RIGHT;
+        nextDirection = directions.RIGHT;
     }
 }
 
@@ -77,6 +78,7 @@ function resetSnake() {
 }
 
 function moveSnake() {
+    direction = nextDirection;
     if (direction === directions.UP) moveSnakeUp();
     else if (direction === directions.RIGHT) moveSnakeRight();
     else if (direction === directions.DOWN) moveSnakeDown();
