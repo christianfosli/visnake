@@ -10,7 +10,7 @@ app.secret_key = os.environ['SECRET_KEY']
 
 DB_CONF = {
     'database': 'visnake',
-    'username': 'visnake-admin',
+    'username': os.environ.get('DB_USER', 'visnake-admin'),
     'pwd': os.environ['DB_PASSWORD'],
     'host': os.environ['DB_HOST']
 }
