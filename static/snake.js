@@ -68,7 +68,6 @@ function startSnake() {
 }
 
 function resetSnake() {
-    console.log('lets play again');
     direction = directions.RIGHT;
     snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
     appleAt = -1;
@@ -127,7 +126,6 @@ function gameOver() {
             headers: { 'Content-Type': 'application/json' }
         })  .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.is_highscore) addHighscore();
             });
     if (mobile)
@@ -139,8 +137,12 @@ function addHighscore() {
     let usr = prompt('You made the highscore list! Please enter your (nick)name');
     fetch(`/add-to-highscore?usr=${usr}`)
         .then(res => {
-            console.log(`req highscore to server - status ${res.status}`);
             fetchScores();
+            if (!res.ok)
+                document.querySelector('main div').append(
+                    `<div class="error">Woops, failed to add your score to the highscore \
+                    list. Please click <a href="/add-to-highscore?usr=${usr}>here</a> \
+                    to try again</div>`);
         });
 }
 

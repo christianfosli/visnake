@@ -42,6 +42,11 @@ main > div span {
     padding-right: 1em;
 }
 
+.error {
+    background-color: darkred;
+    color: #FFFFFF;
+}
+
 table {
     border-collapse: collapse;
     min-width: 300px;
