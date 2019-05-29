@@ -8,31 +8,33 @@ let snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
 let appleAt = -1;
 let snakeSpeed = 500;
 let gameActive = false;
+let mobile = false;
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('main').insertBefore(grid, document.querySelector('main article'));
-    document.onkeydown = (ev) => {
-        const k = ev.key;
-        if (k == 'i' && !gameActive) startSnake();
-        else if (k == 'h') {
-            if (snake.length > 1 && direction === directions.RIGHT) return;
-            direction = directions.LEFT;
-        }
-        else if (k == 'j') {
-            if (snake.length > 1 && direction === directions.UP) return;
-            direction = directions.DOWN;
-        } 
-        else if (k == 'k') {
-            if (snake.length > 1 && direction === directions.DOWN) return;
-            direction = directions.UP;
-        }
-        else if (k == 'l') {
-            if (snake.length > 1 && direction === directions.LEFT) return;
-            direction = directions.RIGHT;
-        }
-    };
+    document.querySelector('main').insertBefore(grid, document.querySelector('main div+div'));
+    document.onkeydown = (ev) => vim(ev.key);
     fetchScores();
 });
+
+function vim(key) {
+    if (key == 'i' && !gameActive) startSnake();
+    else if (key == 'h') {
+        if (snake.length > 1 && direction === directions.RIGHT) return;
+        direction = directions.LEFT;
+    }
+    else if (key == 'j') {
+        if (snake.length > 1 && direction === directions.UP) return;
+        direction = directions.DOWN;
+    } 
+    else if (key == 'k') {
+        if (snake.length > 1 && direction === directions.DOWN) return;
+        direction = directions.UP;
+    }
+    else if (key == 'l') {
+        if (snake.length > 1 && direction === directions.LEFT) return;
+        direction = directions.RIGHT;
+    }
+}
 
 function mkGrid() {
     let container = document.createElement('div');
@@ -41,6 +43,16 @@ function mkGrid() {
         for (let j = 0; j<gridSize; j++)
             container.appendChild(document.createElement('div'));
     return container;
+}
+
+function startSnakeMobile() {
+    mobile = true;
+    document.getElementById('mobile-keyboard').innerHTML = `
+        <button onclick="vim('h')">h</button>
+        <button onclick="vim('j')">j</button>
+        <button onclick="vim('k')">k</button>
+        <button onclick="vim('l')">l</button>`;
+    startSnake();
 }
 
 function startSnake() {
@@ -116,6 +128,9 @@ function gameOver() {
                 console.log(data);
                 if (data.is_highscore) addHighscore();
             });
+    if (mobile)
+        document.getElementById('mobile-keyboard').innerHTML = 
+            '<button onclick="startSnakeMobile()">i</button>';
 }
 
 function addHighscore() {
