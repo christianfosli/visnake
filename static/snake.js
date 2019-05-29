@@ -175,11 +175,11 @@ function fetchScores() {
     });
 
     fetch('/top-month').then(res => res.json()).then(data => {
-        document.getElementById('top-score-month').innerText = data[0].score;
+        document.getElementById('top-score-month').innerText = `${data[0].score} by ${data[0].username}`;
     });
 
     fetch('/top-all').then(res => res.json()).then(data => {
-        document.getElementById('top-score-all').innerText = data[0].score;
+        document.getElementById('top-score-all').innerText = `${data[0].score} by ${data[0].username}`;
     });
 
 }
