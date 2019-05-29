@@ -51,3 +51,27 @@ td, th {
     border: solid #555555 1px; 
     padding: 3px;
 }
+
+@media screen and (min-width: 600px) {
+    #mobile-keyboard {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #mobile-keyboard {
+        display: flex;
+    }
+
+    #mobile-keyboard button {
+        width: calc(100% /4);
+        height: 2em;
+        background-color: #000000;
+        color: #FFFFFF;
+    }
+
+    .container div {
+        height: 20px;
+    }
+
+}
