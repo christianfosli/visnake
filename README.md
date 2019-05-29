@@ -16,7 +16,7 @@ https://visnake.azurewebsites.net/</a>
 Set environment variables: `. ./dev_config.sh` on max/linux, or
 `.\dev_config.ps1` on windows powershell.
 
-Run server: `flask run` or `python3 app.py`, then open your browser at `127.0.0.1:500`
+Run server: `flask run` or `python3 app.py`, then open your browser at `127.0.0.1:5000`
 
 ### Database
 
