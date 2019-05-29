@@ -33,7 +33,7 @@ def score():
         req_score = int(request.get_json()['score'])
         if int(req_score) > max_score:
             session['max_score'] = req_score
-        return jsonify({'is_highscore' : is_highscore(max_score)}), 200
+        return jsonify({'is_highscore' : is_highscore(session['max_score'])}), 200
     except (ValueError, KeyError) as err:
         print(f'Error in /score -- {err}')
         return abort(400)
