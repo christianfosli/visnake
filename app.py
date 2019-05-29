@@ -1,8 +1,16 @@
 import os
 from flask import Flask, render_template, request, jsonify, session, abort
+from mysql import connector
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
+
+DB_CONF = {
+    'database': 'visnake',
+    'username': 'visnake-admin',
+    'pwd': os.environ['DB_PASSWORD'],
+    'host': os.environ['DB_HOST']
+}
 
 @app.route('/')
 def index():
