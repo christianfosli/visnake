@@ -9,11 +9,6 @@ let appleAt = -1;
 let snakeSpeed = 500;
 let gameActive = false;
 
-fetch('/score').then(res => res.json()).then(data => {
-    maxScore = data.score;
-    document.getElementById('max-score').innerText = `Your max score: ${maxScore}`;
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('main').insertBefore(grid, document.querySelector('main article'));
     document.onkeydown = (ev) => {
@@ -36,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             direction = directions.RIGHT;
         }
     };
+    fetchScores();
 });
 
 function mkGrid() {
@@ -115,7 +111,20 @@ function gameOver() {
             method: 'POST',
             body: JSON.stringify({'score': score}),
             headers: { 'Content-Type': 'application/json' }
-        }).then(res => console.log(`score sent to server - status: ${res.status}`));
+        })  .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.is_highscore) addHighscore();
+            });
+}
+
+function addHighscore() {
+    let usr = prompt('You made the highscore list! Please enter your (nick)name');
+    fetch(`/add-to-highscore?usr=${usr}`)
+        .then(res => {
+            console.log(`req highscore to server - status ${res.status}`);
+            fetchScores();
+        });
 }
 
 function addApple() {
@@ -139,4 +148,21 @@ function updateScore() {
         maxScore = score;
         document.getElementById('max-score').innerText = `Your max score: ${maxScore}`;
     }
+}
+
+function fetchScores() {
+
+    fetch('/score').then(res => res.json()).then(data => {
+        maxScore = data.score;
+        document.getElementById('max-score').innerText = `Your max score: ${maxScore}`;
+    });
+
+    fetch('/top-month').then(res => res.json()).then(data => {
+        document.getElementById('top-score-month').innerText = data[0].score;
+    });
+
+    fetch('/top-all').then(res => res.json()).then(data => {
+        document.getElementById('top-score-all').innerText = data[0].score;
+    });
+
 }
