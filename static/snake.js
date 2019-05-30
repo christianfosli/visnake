@@ -159,7 +159,7 @@ function addHighscore() {
             if (!res.ok)
                 document.querySelector('main div').appendChild(createErrorDiv(
                     `Woops, failed to add your score to the highscore \
-                    list. Please click <a href="/add-to-highscore?usr=${usr}>here</a> \
+                    list. Please click <a href="/add-to-highscore?usr=${usr}">here</a> \
                     to try again`));
         });
 }
