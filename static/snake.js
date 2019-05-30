@@ -148,6 +148,7 @@ function addHighscore() {
 
 function addApple() {
     appleAt = Math.ceil(Math.random() * (gridSize**2));
+    if (snake.includes(appleAt)) return addApple();
     document.querySelector(`.container div:nth-child(${appleAt})`).classList.add('apple');
 }
 
