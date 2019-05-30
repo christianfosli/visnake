@@ -4,14 +4,17 @@ body {
     color: yellowgreen;
 }
 
-header, main, footer {
+h1 {
+    text-align: center;
+}
+
+header, main, article, footer {
     max-width: 600px;
     margin: auto;
 }
 
 footer {
     padding-top: 2em;
-    color: #777777;
 }
 
 a {
@@ -57,10 +60,12 @@ td, th {
     padding: 3px;
 }
 
-@media screen and (min-width: 600px) {
-    #mobile-keyboard {
-        display: none;
-    }
+article h3+p, td, th, footer {
+    color: #AAAAAA;
+}
+
+#highscores h3, #highscores table {
+    display: none;
 }
 
 @media screen and (max-width: 600px) {
@@ -77,6 +82,42 @@ td, th {
 
     .container div {
         height: 20px;
+    }
+
+}
+
+@media screen and (min-width: 600px) {
+    #mobile-keyboard {
+        display: none;
+    }
+    
+}
+
+@media screen and (min-width: 940px) {
+    #game-and-highscore-container main {
+        display: inline-block;
+        width: 600px;
+    }
+
+    #highscores {
+        display: inline-block;
+        width: 300px;
+    }
+
+    #highscores p {
+        display: none;
+    }
+
+    #highscores h3 {
+        display: inline-block;
+    }
+
+    #highscores table {
+        display: table;
+    }
+
+    #game-and-highscore-container {
+        display: flex;
     }
 
 }

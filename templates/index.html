@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
 <script src="/static/snake.js"></script>
+<div id="game-and-highscore-container">
+<main>
 <div>
     <span id="start-instructions">Press i to start</span>
     <span id="score"></span> <span id="max-score"></span>
@@ -9,12 +11,39 @@
 <div id="mobile-keyboard">
     <button onclick="startSnakeMobile()">I</button>
 </div>
-<article>
-    <h3>Highscores</h3>
-    Top this month: <span id="top-score-month"></span><br>
-    Top all time: <span id="top-score-all"></span><br>
-    <a href="/highscores">Show all</a>
+</main>
+<article id="highscores">
+    <p>
+        Top score this month: <span id="top-score-month"></span><br>
+        Top score all time: <span id="top-score-all"></span><br>
+        <a href="/highscores">Show highscores</a>
+    </p>
+    <h3>Top 10 month</h3>
+    <table id="top-month-tbl">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Injected by JS-->
+        </tbody>
+    </table>
+    <h3>Top 10 all-time</h3>
+    <table id="top-all-tbl">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Injected by JS-->
+        </tbody>
+    </table>
 </article>
+</div>
 <article>
     <h3>How to play</h3>
     <p>
