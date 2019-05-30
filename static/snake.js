@@ -1,11 +1,11 @@
 const gridSize = 16;  /* grid is gridSize x gridSize */
 const grid = mkGrid();
-const directions = { 'UP':1, 'RIGHT':2, 'DOWN':3, 'LEFT':4 }
+const directions = { 'UP':1, 'RIGHT':2, 'DOWN':3, 'LEFT':4 };
 let score = -1;
 let maxScore = 0; // Replaced with fetch from server
 let direction = directions.RIGHT;
 let nextDirection = directions.RIGHT;
-let snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
+let snake = [Math.floor(((gridSize**2)/2)-(gridSize/2))];
 let appleAt = -1;
 let snakeSpeed = 500;
 let gameActive = false;
@@ -75,6 +75,7 @@ function resetSnake() {
     snakeSpeed = 500;
     document.querySelectorAll('.snake').forEach(div => div.classList.remove('snake'));
     document.querySelector('.apple').classList.remove('apple');
+    document.querySelectorAll('.error').forEach(div => div.parentNode.removeChild(div));
 }
 
 function moveSnake() {
