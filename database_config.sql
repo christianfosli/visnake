@@ -8,12 +8,12 @@ create table highscore (
     primary key (username, score, sdate)
 );
 
-create view top_ten_all as select * from highscore H
-order by H.score desc limit 10;
+create or replace view top_ten_all as select * from highscore H
+order by H.score desc, H.sdate asc limit 10;
 
-create view top_ten_month as select * from highscore H
-where month(sdate) = month(CURRENT_DATE())
-order by H.score desc limit 10;
+create or replace view top_ten_month as select * from highscore H
+where month(H.sdate) = month(CURRENT_DATE())
+order by H.score desc, H.sdate asc limit 10;
 
 /* If dev */
 create user 'visnake-admin'@'localhost' identified by 'secret123';
