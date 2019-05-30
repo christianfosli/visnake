@@ -68,6 +68,7 @@ function startSnake() {
 }
 
 function resetSnake() {
+    fetchScores();
     direction = directions.RIGHT;
     snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
     appleAt = -1;
