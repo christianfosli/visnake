@@ -120,15 +120,14 @@ function gameOver() {
     gameoverdiv.id = 'start-instructions';
     gameoverdiv.innerText = 'Game Over. Press i to play again';
     document.querySelector('main div').appendChild(gameoverdiv);
-    if (score >= maxScore)
-        fetch('/score', {
-            method: 'POST',
-            body: JSON.stringify({'score': score}),
-            headers: { 'Content-Type': 'application/json' }
-        })  .then(res => res.json())
-            .then(data => {
-                if (data.is_highscore) addHighscore();
-            });
+    fetch('/score', {
+        method: 'POST',
+        body: JSON.stringify({'score': score}),
+        headers: { 'Content-Type': 'application/json' }
+    })  .then(res => res.json())
+        .then(data => {
+            if (data.is_highscore) addHighscore();
+        });
     if (mobile)
         document.getElementById('mobile-keyboard').innerHTML = 
             '<button onclick="startSnakeMobile()">i</button>';
@@ -191,7 +190,7 @@ function updateScore() {
 function fetchScores() {
 
     fetch('/score').then(res => res.json()).then(data => {
-        maxScore = data.score;
+        maxScore = data.max_score;
         document.getElementById('max-score').innerText = `Your max score: ${maxScore}`;
     });
 

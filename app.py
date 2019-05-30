@@ -27,13 +27,15 @@ def highscores():
 @app.route('/score', methods=['GET', 'POST'])
 def score():
     max_score = session.get('max_score', 0)
+    last_score = session.get('last_score', 0)
     if request.method == 'GET':
-        return jsonify({'score' : max_score}), 200
+        return jsonify({'max_score': max_score, 'last_score': last_score}), 200
     try:
-        req_score = int(request.get_json()['score'])
-        if int(req_score) > max_score:
-            session['max_score'] = req_score
-        return jsonify({'is_highscore' : is_highscore(session['max_score'])}), 200
+        last_score = int(request.get_json()['score'])
+        session['last_score'] = last_score
+        if last_score > max_score:
+            session['max_score'] = last_score
+        return jsonify({'is_highscore' : is_highscore(last_score)}), 200
     except connector.Error as err:
         print(f'SQL Error in /score: {err}')
         return abort(500)
@@ -43,7 +45,7 @@ def score():
 
 @app.route('/add-to-highscore')
 def add_to_highscore():
-    if not 'usr' in request.args or not is_highscore(session['max_score']):
+    if not 'usr' in request.args or not is_highscore(session['last_score']):
         return abort(400)
     conn = connect_db()
     try:
@@ -52,7 +54,7 @@ def add_to_highscore():
             'insert into highscore values (%s, %s, %s)',
             (
                 request.args['usr'],
-                session['max_score'],
+                session['last_score'],
                 datetime.strftime(datetime.now(), '%Y-%m-%d')
             )
         )
