@@ -134,16 +134,33 @@ function gameOver() {
             '<button onclick="startSnakeMobile()">i</button>';
 }
 
+function removeParent(selfNode) {
+    selfNode.parentNode.parentNode.removeChild(selfNode.parentNode);
+}
+
+function createErrorDiv(message) {
+    let div = document.createElement('div');
+    div.classList.add('error');
+    div.innerHTML = message + ' <button onclick="removeParent(this)">hide</button>';
+    return div;
+}
+
 function addHighscore() {
     let usr = prompt('You made the highscore list! Please enter your (nick)name');
+    if (usr == null) {
+        document.querySelector('main div').appendChild(createErrorDiv(
+            'Adding highscore cancelled! Click <button onclick="removeParent(this); addHighscore();">\
+            here</button> if you change your mind'));
+        return;
+    }
     fetch(`/add-to-highscore?usr=${usr}`)
         .then(res => {
             fetchScores();
             if (!res.ok)
-                document.querySelector('main div').append(
-                    `<div class="error">Woops, failed to add your score to the highscore \
+                document.querySelector('main div').appendChild(createErrorDiv(
+                    `Woops, failed to add your score to the highscore \
                     list. Please click <a href="/add-to-highscore?usr=${usr}>here</a> \
-                    to try again</div>`);
+                    to try again`));
         });
 }
 
