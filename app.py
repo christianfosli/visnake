@@ -45,7 +45,8 @@ def score():
 
 @app.route('/add-to-highscore')
 def add_to_highscore():
-    if not 'usr' in request.args or not is_highscore(session['last_score']):
+    if not 'usr' in request.args or len(request.args['usr']) > 50 or \
+        not is_highscore(session['last_score']):
         return abort(400)
     conn = connect_db()
     try:
