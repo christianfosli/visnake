@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import random
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify, session, abort, g
 from mysql import connector
@@ -60,6 +61,7 @@ def add_to_highscore():
             )
         )
         conn.commit()
+        cleanup_database_if_needed()
         return '', 201
     except connector.Error as err:
         if err.errno == 1062:
@@ -118,6 +120,20 @@ def top_ten_alltime() -> dict:
     allscores = cur.fetchall()
     cur.close()
     return allscores
+
+def cleanup_database_if_needed():
+    if random.randint(1, 5) != 5:
+        # dont need to check this every time
+        return
+    conn = connect_db()
+    cur = conn.cursor()
+    try:
+        cur.execute('select count(*) from highscore')
+        if cur.fetchone()[0] > 60:
+            cur.callproc('cleanup_highscores')
+            conn.commit()
+    finally:
+        cur.close()
 
 def connect_db():
     if 'db' not in g:
