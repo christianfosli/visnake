@@ -15,6 +15,8 @@ create or replace view top_ten_month as select * from highscore H
 where month(H.sdate) = month(CURRENT_DATE())
 order by H.score desc, H.sdate asc limit 10;
 
+create index ix_score_date on highscore(score desc, sdate asc);
+
 delimiter //
 create procedure cleanup_highscores()
     begin
