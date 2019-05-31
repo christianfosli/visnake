@@ -7,7 +7,6 @@ let direction = directions.RIGHT;
 let nextDirection = directions.RIGHT;
 let snake = [Math.floor(((gridSize**2)/2)-(gridSize/2))];
 let appleAt = -1;
-let snakeSpeed = 500;
 let gameActive = false;
 let mobile = false;
 
@@ -72,7 +71,6 @@ function resetSnake() {
     direction = directions.RIGHT;
     snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
     appleAt = -1;
-    snakeSpeed = 500;
     document.querySelectorAll('.snake').forEach(div => div.classList.remove('snake'));
     document.querySelector('.apple').classList.remove('apple');
     document.querySelectorAll('.error').forEach(div => div.parentNode.removeChild(div));
@@ -88,7 +86,7 @@ function moveSnake() {
     if (snake[snake.length-1] == appleAt) eatApple();
     document.querySelector(`.container div:nth-child(${snake[snake.length-1]})`).classList.add('snake');
     document.querySelector(`.container div:nth-child(${snake.shift()})`).classList.remove('snake');
-    setTimeout(moveSnake, snakeSpeed);
+    setTimeout(moveSnake, snakeSpeed());
 }
 
 function moveSnakeUp() {
@@ -181,8 +179,10 @@ function eatApple() {
     addApple();
     score++;
     updateScore();
-    if (snakeSpeed > 100) snakeSpeed -= 50;
-    else if (snakeSpeed > 20) snakeSpeed -= 10;
+}
+
+function snakeSpeed() {
+    return Math.floor(300 * Math.exp(-score/3) + 40);
 }
 
 function updateScore() {
