@@ -15,6 +15,7 @@ DB_CONF = {
     'pwd': os.environ['DB_PASSWORD'],
     'host': os.environ['DB_HOST']
 }
+SCORE_LIMIT = 256
 
 @app.route('/')
 def index():
@@ -37,14 +38,18 @@ def score():
         return jsonify({'max_score': max_score, 'last_score': last_score}), 200
     try:
         last_score = int(request.get_json()['score'])
+        if last_score == 1337:  # Keep away chuck norris!
+            return abort(418)
+        if last_score > SCORE_LIMIT:
+            return abort(400, 'score not within limits')
         session['last_score'] = last_score
         if last_score > max_score:
             session['max_score'] = last_score
         return jsonify({'is_highscore' : is_highscore(last_score)}), 200
     except connector.Error as err:
         print(f'SQL Error in /score: {err}')
-        return abort(500)
-    except (ValueError, KeyError) as err:
+        return abort(500, 'database issue')
+    except (ValueError, KeyError, TypeError) as err:
         print(f'Key/Value error in /score: {err}')
         return abort(400)
 
