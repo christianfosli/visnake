@@ -150,7 +150,7 @@ function addHighscore() {
             'Adding highscore cancelled! Click <button onclick="removeParent(this); addHighscore();">\
             here</button> if you change your mind'));
         return;
-    } else if (usr.length > 50) {
+    } if (usr.length > 50) {
         document.querySelector('main div').appendChild(createErrorDiv(
             'Failed to add highscore as username is more than 50 characters long. Click \
             <button onclick="removeParent(this); addHighscore();">here</button> to choose another username'

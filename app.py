@@ -69,7 +69,7 @@ def add_to_highscore():
         return '', 201
     except connector.Error as err:
         if err.errno == 1062:
-            print('Not adding duplicate entry to server')
+            print('Not adding duplicate entry to database')
             return '', 200
         print(f'SQL Error in /add-to-highscore: {err}')
         return abort(500)
