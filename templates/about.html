@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>About</h2>
+<p>
+    Vi Snake is similar to the snake game on old Nokia phones.
+    The h, j, k, l keys are used to change directions, like in Vi/Vim text editor.
+</p>
+<p>
+    The game is open source, and distributed under the MIT license.
+    Source code is available on <a href="https://github.com/christianfosli/visnake/">github</a>.
+</p>
+<p>
+    Upon playing your score will be sent to the server.
+    Your last score and maximum score is stored in a session cookie.
+    It is automatically deleted when you close your browser, or after 31 days.
+</p>
+<p>
+    If you get a high enough score, you are prompted to enter your name to get on the highscore list.
+    The highscores (score, username and date) are stored on a database on the server.
+    Should you need to remove or export your data from the highscore list, please contact me by
+    opening an <a href="https://github.com/christianfosli/visnake/issues">issue on github</a>,
+    or message me on <a href="https://twitter.com/christianfosli">twitter</a> or
+    <a href="https://www.linkedin.com/in/christianfosli/">linked-in</a>.
+</p>
+{% endblock %}

@@ -25,6 +25,10 @@ def highscores():
     return render_template(
         'highscores.html', top_monthly=top_ten_monthly(), top_all=top_ten_alltime())
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/score', methods=['GET', 'POST'])
 def score():
     max_score = session.get('max_score', 0)
