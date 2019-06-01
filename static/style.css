@@ -14,11 +14,23 @@ header, main, article, footer {
 }
 
 footer {
-    padding-top: 2em;
+    border-top: solid #555555 1px;
+    margin-top: 3em;
+    padding-top: 1em;
+    text-align: center;
+}
+
+nav a {
+    padding: 0 15px 0 15px;
 }
 
 a {
     color: lightblue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .container {
@@ -60,7 +72,7 @@ td, th {
     padding: 3px;
 }
 
-article h3+p, td, th, footer {
+p, td, th {
     color: #AAAAAA;
 }
 
