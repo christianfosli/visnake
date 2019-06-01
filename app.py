@@ -122,7 +122,7 @@ def top_ten_monthly() -> list:
     cur.close()
     return monthly
 
-def top_ten_alltime() -> dict:
+def top_ten_alltime() -> list:
     conn = connect_db()
     cur = conn.cursor(dictionary=True)
     cur.execute('select * from top_ten_all')
