@@ -48,10 +48,10 @@ function mkGrid() {
 function startSnakeMobile() {
     mobile = true;
     document.getElementById('mobile-keyboard').innerHTML = `
-        <button onclick="vim('h')">h</button>
-        <button onclick="vim('j')">j</button>
-        <button onclick="vim('k')">k</button>
-        <button onclick="vim('l')">l</button>`;
+        <button onclick="vim('h')">H</button>
+        <button onclick="vim('j')">J</button>
+        <button onclick="vim('k')">K</button>
+        <button onclick="vim('l')">L</button>`;
     startSnake();
 }
 
@@ -129,7 +129,7 @@ function gameOver() {
         });
     if (mobile)
         document.getElementById('mobile-keyboard').innerHTML = 
-            '<button onclick="startSnakeMobile()">i</button>';
+            '<button onclick="startSnakeMobile()">I</button>';
 }
 
 function removeParent(selfNode) {

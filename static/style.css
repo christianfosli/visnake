@@ -87,9 +87,11 @@ p, td, th {
 
     #mobile-keyboard button {
         width: calc(100% /4);
-        height: 2em;
+        height: 4em;
         background-color: #000000;
         color: #FFFFFF;
+        font-weight: bold;
+        font-size: 150%;
     }
 
     .container div {
