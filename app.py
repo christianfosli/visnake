@@ -5,6 +5,7 @@ import random
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify, session, abort, g
 from mysql import connector
+from profanity_check import predict
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
@@ -55,9 +56,14 @@ def score():
 
 @app.route('/add-to-highscore')
 def add_to_highscore():
-    if not 'usr' in request.args or len(request.args['usr']) > 50 or \
-        not is_highscore(session['last_score']):
+    if not 'usr' in request.args:
         return abort(400)
+    if len(request.args['usr']) > 50:
+        return abort(400, 'Username too long')
+    if not is_highscore(session['last_score']):
+        return abort(400, 'Score is not a highscore')
+    if predict([request.args['usr']])[0] == 1:
+        return abort(400, 'Username is too offensive')
     conn = connect_db()
     try:
         cur = conn.cursor()

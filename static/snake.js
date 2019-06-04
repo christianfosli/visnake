@@ -158,12 +158,13 @@ function addHighscore() {
         return;
     }
     fetch(`/add-to-highscore?usr=${usr}`)
-        .then(res => {
+        .then(async res => {
             fetchScores();
-            if (!res.ok)
+            if (!res.ok) {
                 document.querySelector('main div').appendChild(createErrorDiv(
-                    `Woops, failed to add your score to the highscore list. Please click \
-                    <button onclick="removeParent(this); addHighscore();">here</button> to try again`));
+                    `Failed to add your score to the highscore list due to: ${getFirstPar(await res.text())}\
+                     Please click <button onclick="removeParent(this); addHighscore();">here</button> to try again`));
+            }
         });
 }
 
@@ -218,4 +219,8 @@ function fetchScores() {
         );
     });
 
+}
+
+function getFirstPar(htmlStr) {
+    return htmlStr.substring(htmlStr.indexOf('<p>')+3, htmlStr.indexOf('</p>'));
 }
