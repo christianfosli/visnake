@@ -3,7 +3,7 @@
 import os
 import random
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, session, abort, g
+from flask import Flask, render_template, request, jsonify, session, abort, g, redirect
 from mysql import connector
 
 app = Flask(__name__)
@@ -89,6 +89,11 @@ def top_monthly_json():
 @app.route('/top-all')
 def top_all_json():
     return jsonify(top_ten_alltime())
+
+@app.before_request
+def redirect_prod_to_https():
+    if app.env != 'development' and not request.is_secure():
+        return redirect(request.url.replace('http', 'https'), code=301)
 
 @app.teardown_appcontext
 def close_db(error):
