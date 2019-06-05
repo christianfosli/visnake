@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function vim(key) {
     if (commandlineMode) {
         if (key == 'Enter') interpretCommand();
+        else if (key == 'Escape') closeCommandlineMode();
         return;
     }
     if (key == 'i' && !gameActive) startSnake();
@@ -51,6 +52,11 @@ function vim(key) {
         } else {
             return showErr('E001: Unrecognized command');
         }
+        closeCommandlineMode();
+    }
+
+    function closeCommandlineMode() {
+        commandlineMode = false;
         document.querySelector('#commandline input').disabled = true;
         document.querySelector('#commandline input').value = '';
     }
@@ -59,9 +65,8 @@ function vim(key) {
         document.querySelector('#commandline').classList.add('error');
         document.querySelector('#commandline input').value = errStr;
         setTimeout(() => {
-            document.querySelector('#commandline input').value = '';
-            document.querySelector('#commandline input').disabled = true;
             document.querySelector('#commandline').classList.remove('error');
+            closeCommandlineMode();
         }, 2000);
     }
 }
