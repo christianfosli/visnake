@@ -1,15 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
+<script src="/static/vim.js"></script>
 <script src="/static/snake.js"></script>
 <div id="game-and-highscore-container">
 <main>
 <div>
-    <span id="start-instructions">Press i to start</span>
+    <span id="start-instructions">Press i to start. Type ":help" for help.</span>
     <span id="score"></span> <span id="max-score"></span>
 </div>
 <!--Game to be injected by JS-->
 <div id="mobile-keyboard">
     <button onclick="startSnakeMobile()">I</button>
+    <button onclick="mobileCmdLine()">:</button>
+</div>
+<div id="commandline">
+    <input disabled>
 </div>
 </main>
 <article id="highscores">
@@ -44,12 +49,18 @@
     </table>
 </article>
 </div>
-<article>
+<article id="play-help" class="hidden">
     <h3>How to play</h3>
     <p>
         This game works similar to the snake game on old Nokia phones.
-        The difference is that it uses <code>h, j, k, l</code> keys to
-        move the snake.
+        The difference is that the <code>h, j, k, l</code> keys are used
+        to move the snake.
     </p>
+    <ul>
+        <li>H  -  Left</li>
+        <li>J  -  Down</li>
+        <li>K  -  Up</li>
+        <li>L  -  Right</li>
+    </ul>
 </article>
 {% endblock %}

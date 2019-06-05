@@ -7,34 +7,10 @@ let direction = directions.RIGHT;
 let nextDirection = directions.RIGHT;
 let snake = [Math.floor(((gridSize**2)/2)-(gridSize/2))];
 let appleAt = -1;
-let gameActive = false;
-let mobile = false;
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('main').insertBefore(grid, document.querySelector('main div+div'));
-    document.onkeydown = (ev) => vim(ev.key);
     fetchScores();
 });
-
-function vim(key) {
-    if (key == 'i' && !gameActive) startSnake();
-    else if (key == 'h') {
-        if (snake.length > 1 && direction === directions.RIGHT) return;
-        nextDirection = directions.LEFT;
-    }
-    else if (key == 'j') {
-        if (snake.length > 1 && direction === directions.UP) return;
-        nextDirection = directions.DOWN;
-    } 
-    else if (key == 'k') {
-        if (snake.length > 1 && direction === directions.DOWN) return;
-        nextDirection = directions.UP;
-    }
-    else if (key == 'l') {
-        if (snake.length > 1 && direction === directions.LEFT) return;
-        nextDirection = directions.RIGHT;
-    }
-}
 
 function mkGrid() {
     let container = document.createElement('div');

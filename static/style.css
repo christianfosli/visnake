@@ -77,9 +77,39 @@ p, td, th {
     color: #AAAAAA;
 }
 
+#play-help {
+    display: absolute;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+#play-help.hidden {
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s;
+}
+
 #highscores h3, #highscores table {
     display: none;
 }
+
+#commandline {
+    transform: translateY(-1.5em);
+}
+
+#commandline input[disabled] {
+    display: none;
+}
+
+#commandline input {
+    background-color: rgba(1, 1, 1, 0.3);
+    color: white;
+    border: 0;
+    width: 100%;
+}
+
 
 @media screen and (max-width: 600px) {
     #mobile-keyboard {
