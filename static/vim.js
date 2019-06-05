@@ -32,8 +32,15 @@ function vim(key) {
     }
     else if (key == ':') {
         commandlineMode = true;
-        document.querySelector('#commandline input').disabled = false;
-        document.querySelector('#commandline input').focus();
+        let inputField = document.querySelector('#commandline input');
+        inputField.disabled = false;
+        inputField.focus();
+        setTimeout(() => {
+            // On chrome the ':' from the key event ends up on the input field
+            // but on firefox it usually doesn't. This adds it if necessary.
+            if (!inputField.value.startsWith(':'))
+                inputField.value = ':' + inputField.value;
+        }, 50);
     }
 
     function interpretCommand() {
@@ -64,6 +71,7 @@ function vim(key) {
     function showErr(errStr) {
         document.querySelector('#commandline').classList.add('error');
         document.querySelector('#commandline input').value = errStr;
+        document.querySelector('#commandline input').blur();
         setTimeout(() => {
             document.querySelector('#commandline').classList.remove('error');
             closeCommandlineMode();
