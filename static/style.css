@@ -82,13 +82,13 @@ p, td, th {
     visibility: visible;
     opacity: 1;
     transition: opacity 1s;
+    overflow: hidden;
 }
 
 #play-help.hidden {
     visibility: hidden;
     height: 0;
     opacity: 0;
-    transition: visibility 0s 1s, opacity 1s;
 }
 
 #highscores h3, #highscores table {
