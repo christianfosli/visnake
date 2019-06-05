@@ -42,6 +42,10 @@ function vim(key) {
                 inputField.value = ':' + inputField.value;
         }, 50);
     }
+    else if (gameActive && key.startsWith('Arrow')) {
+        document.querySelector('#play-help').classList.remove('hidden');
+    }
+
 
     function interpretCommand() {
         commandlineMode = false;
