@@ -47,6 +47,7 @@ a:hover {
 
 .apple {
     background-color: yellowgreen;
+    transition: background-color 1s;
 }
 
 .snake {
