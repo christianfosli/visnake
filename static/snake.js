@@ -206,7 +206,7 @@ function fetchScores() {
         document.querySelector('#top-month-tbl tbody').innerHTML = '';
         data.forEach(row =>
             document.querySelector('#top-month-tbl tbody').innerHTML +=
-                `<tr><td>${row.username}</td><td>${row.score}</td></tr>`
+                `<tr><td>${escapeHTML(row.username)}</td><td>${row.score}</td></tr>`
         );
     });
 
@@ -215,7 +215,7 @@ function fetchScores() {
         document.querySelector('#top-all-tbl tbody').innerHTML = '';
         data.forEach(row =>
             document.querySelector('#top-all-tbl tbody').innerHTML +=
-                `<tr><td>${row.username}</td><td>${row.score}</td></tr>`
+                `<tr><td>${escapeHTML(row.username)}</td><td>${row.score}</td></tr>`
         );
     });
 
@@ -223,4 +223,10 @@ function fetchScores() {
 
 function getFirstPar(htmlStr) {
     return htmlStr.substring(htmlStr.indexOf('<p>')+3, htmlStr.indexOf('</p>'));
+}
+
+function escapeHTML(html) {
+    let escapeTA = document.createElement('textarea');
+    escapeTA.textContent = html;
+    return escapeTA.innerHTML;
 }
