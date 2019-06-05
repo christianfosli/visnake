@@ -70,10 +70,3 @@ function vim(key) {
         }, 2000);
     }
 }
-
-function mobileCmdLine() {
-    commandlineMode = true;
-    document.querySelector('#commandline input').disabled = false;
-    document.querySelector('#commandline input').value = ':';
-    document.querySelector('#commandline input').focus();
-}

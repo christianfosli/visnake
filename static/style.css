@@ -129,6 +129,10 @@ p, td, th {
         height: 20px;
     }
 
+    #start-instructions {
+        display: none;
+    }
+
 }
 
 @media screen and (min-width: 600px) {

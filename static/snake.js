@@ -31,6 +31,11 @@ function startSnakeMobile() {
     startSnake();
 }
 
+function mobileHelp(btn) {
+    document.querySelector('#play-help').classList.remove('hidden');
+    btn.parentNode.removeChild(btn);
+}
+
 function startSnake() {
     if (score !== -1) resetSnake();
     score = 0;
