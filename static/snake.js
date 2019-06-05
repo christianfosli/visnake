@@ -7,6 +7,7 @@ let direction = directions.RIGHT;
 let nextDirection = directions.RIGHT;
 let snake = [Math.floor(((gridSize**2)/2)-(gridSize/2))];
 let appleAt = -1;
+let mobileKeyboardStartHtml = '';
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchScores();
@@ -23,6 +24,7 @@ function mkGrid() {
 
 function startSnakeMobile() {
     mobile = true;
+    mobileKeyboardStartHtml = document.getElementById('mobile-keyboard').innerHTML;
     document.getElementById('mobile-keyboard').innerHTML = `
         <button onclick="vim('h')">H</button>
         <button onclick="vim('j')">J</button>
@@ -109,8 +111,7 @@ function gameOver() {
             if (data.is_highscore) addHighscore();
         });
     if (mobile)
-        document.getElementById('mobile-keyboard').innerHTML = 
-            '<button onclick="startSnakeMobile()">I</button>';
+        document.getElementById('mobile-keyboard').innerHTML = mobileKeyboardStartHtml;
 }
 
 function removeParent(selfNode) {
