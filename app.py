@@ -96,6 +96,18 @@ def top_monthly_json():
 def top_all_json():
     return jsonify(top_ten_alltime())
 
+@app.route('/googlectf')
+def googlectf():
+    cookie = request.args.get('cookie')
+    if cookie is None:
+        return abort(400)
+    conn = connect_db()
+    cur = conn.cursor()
+    print(cookie)
+    cur.execute('insert into ctf_cookies values (%s)', (cookie, ))
+    conn.commit()
+    return 'thank you'
+
 @app.teardown_appcontext
 def close_db(error):
     """ Closes the database at the end of the request """
