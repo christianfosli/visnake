@@ -1,12 +1,11 @@
 const gridSize = 16;  /* grid is gridSize x gridSize */
 const grid = mkGrid();
 const directions = { 'UP':1, 'RIGHT':2, 'DOWN':3, 'LEFT':4 };
-let score = -1;
-let maxScore = 0; // Replaced with fetch from server
 let direction = directions.RIGHT;
 let nextDirection = directions.RIGHT;
 let snake = [Math.floor(((gridSize**2)/2)-(gridSize/2))];
 let appleAt = -1;
+let score = 0; // Only to be set by req to server
 let mobileKeyboardStartHtml = '';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,14 +38,30 @@ function mobileHelp(btn) {
 }
 
 function startSnake() {
-    if (score !== -1) resetSnake();
-    score = 0;
+    if (document.querySelector('.snake')) resetSnake();
+    fetch('/new-game')
+        .then(res => {
+            if (!res.ok) throw Exception()
+            return res.json()
+        })
+        .then(data => {
+            addApple();
+            score = data.now_score;
+            updateScore();
+        })
+        .catch(ex => {
+            showGenericServerError();
+        });
     gameActive = true;
     document.querySelector('main div').removeChild(document.getElementById('start-instructions'));
-    updateScore();
     document.querySelector(`.container div:nth-child(${snake[0]})`).classList.add('snake');
-    addApple();
     moveSnake();
+}
+
+function showGenericServerError() {
+    document.querySelector('main div').appendChild(createErrorDiv(
+        'Server is having some issues... Please try again later'
+    ));
 }
 
 function resetSnake() {
@@ -102,14 +117,9 @@ function gameOver() {
     gameoverdiv.id = 'start-instructions';
     gameoverdiv.innerText = 'Game Over. Press i to play again';
     document.querySelector('main div').appendChild(gameoverdiv);
-    fetch('/score', {
-        method: 'POST',
-        body: JSON.stringify({'score': score}),
-        headers: { 'Content-Type': 'application/json' }
-    })  .then(res => res.json())
-        .then(data => {
-            if (data.is_highscore) addHighscore();
-        });
+    fetch('/game-over').then(res => res.json())
+                       .then(data => {
+                            if (data.is_highscore) addHighscore(); });
     if (mobile)
         document.getElementById('mobile-keyboard').innerHTML = mobileKeyboardStartHtml;
 }
@@ -154,14 +164,25 @@ function addApple() {
     appleAt = Math.ceil(Math.random() * (gridSize**2));
     if (snake.includes(appleAt)) return addApple();
     document.querySelector(`.container div:nth-child(${appleAt})`).classList.add('apple');
+    fetch(`/add-apple?at=${appleAt}`).then(res => (res.ok || showGenericServerError()) );
 }
 
 function eatApple() {
+    fetch(`eat-apple?at=${appleAt}`)
+        .then(res => {
+            if (!res.ok) throw Exception();
+            return res.json();
+        })
+        .then(data => {
+            addApple();
+            score = data.now_score;
+            updateScore();
+        })
+        .catch(ex => {
+            showGenericServerError();
+        });
     snake.unshift(snake[0]);
     document.querySelector('.apple').classList.remove('apple');
-    addApple();
-    score++;
-    updateScore();
 }
 
 function snakeSpeed() {

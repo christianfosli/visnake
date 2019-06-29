@@ -22,6 +22,56 @@ SCORE_LIMIT = 256
 def index():
     return render_template('index.html')
 
+@app.route('/new-game')
+def new_game():
+    if 'now_score' in session:
+        session.pop('now_score')
+    session['now_score'] = 0
+    session['apples'] = []
+    session['active_game'] = True
+    session.modified = True
+    return jsonify({'now_score': 0}), 200
+
+@app.route('/add-apple')
+def add_apple():
+    try:
+        if not session['active_game']:
+            return abort(400, 'Game hasn\'t started yet...')
+        apples = session.get('apples')
+        apples.append(request.args['at'])
+        session['apples'] = apples
+        if len(session['apples']) > 2:
+            return abort(400, 'Too many apples on the board')
+        return '', 200
+    except KeyError:
+        return abort(400)
+
+@app.route('/eat-apple')
+def eat_apple():
+    try:
+        apples = session['apples']
+        now_score = session['now_score']
+        apples.pop(apples.index(request.args['at']))
+        now_score += 1
+        session['apples'] = apples
+        session['now_score'] = now_score
+        session.modified = True
+        if session.get('now_score', 0) > SCORE_LIMIT:
+            session['now_score'] = 0
+            session.modified = True
+            return abort(400, 'Score too high')
+        return jsonify({'now_score': session.get('now_score')}), 200
+    except (KeyError, ValueError):
+        return abort(400)
+
+@app.route('/game-over')
+def game_over():
+    session['active_game'] = False
+    if session['now_score'] > session['max_score']:
+        session['max_score'] = session['now_score']
+    session.modified = True
+    return jsonify({'is_highscore': is_highscore()})
+
 @app.route('/highscores')
 def highscores():
     return render_template(
@@ -31,28 +81,13 @@ def highscores():
 def about():
     return render_template('about.html')
 
-@app.route('/score', methods=['GET', 'POST'])
+@app.route('/score')
 def score():
     max_score = session.get('max_score', 0)
-    last_score = session.get('last_score', 0)
-    if request.method == 'GET':
-        return jsonify({'max_score': max_score, 'last_score': last_score}), 200
-    try:
-        last_score = int(request.get_json()['score'])
-        if last_score == 1337:  # Keep away chuck norris!
-            return abort(418)
-        if last_score > SCORE_LIMIT:
-            return abort(400, 'score not within limits')
-        session['last_score'] = last_score
-        if last_score > max_score:
-            session['max_score'] = last_score
-        return jsonify({'is_highscore' : is_highscore(last_score)}), 200
-    except connector.Error as err:
-        print(f'SQL Error in /score: {err}')
-        return abort(500, 'database issue')
-    except (ValueError, KeyError, TypeError) as err:
-        print(f'Key/Value error in /score: {err}')
-        return abort(400)
+    now_score = session.get('now_score', 0)
+    return jsonify(
+        {'max_score': max_score,
+         'now_score': now_score}), 200
 
 @app.route('/add-to-highscore')
 def add_to_highscore():
@@ -60,7 +95,7 @@ def add_to_highscore():
         return abort(400)
     if len(request.args['usr']) > 50:
         return abort(400, 'Username too long')
-    if not is_highscore(session['last_score']):
+    if not is_highscore():
         return abort(400, 'Score is not a highscore')
     if predict([request.args['usr']])[0] == 1:
         return abort(400, 'Username is too offensive')
@@ -71,7 +106,7 @@ def add_to_highscore():
             'insert into highscore values (%s, %s, %s)',
             (
                 request.args['usr'],
-                session['last_score'],
+                session['now_score'],
                 datetime.strftime(datetime.now(), '%Y-%m-%d')
             )
         )
@@ -103,7 +138,7 @@ def close_db(error):
     if db is not None:
         db.close()
 
-def is_highscore(add_score: int) -> bool:
+def is_highscore() -> bool:
     conn = connect_db()
     cur = conn.cursor()
     try:
@@ -114,7 +149,7 @@ def is_highscore(add_score: int) -> bool:
         if cur.fetchall()[0][0] < 10:
             return True
         cur.execute('select min(score) from top_ten_month')
-        if cur.fetchall()[0][0] < add_score:
+        if cur.fetchall()[0][0] < session['now_score']:
             return True
         return False
     finally:
