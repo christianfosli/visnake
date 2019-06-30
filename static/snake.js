@@ -67,8 +67,9 @@ function showGenericServerError() {
 function resetSnake() {
     fetchScores();
     direction = directions.RIGHT;
-    snake = [Math.floor((gridSize**2/2)-(gridSize/2))]
+    snake = [Math.floor((gridSize**2/2)-(gridSize/2))];
     appleAt = -1;
+    score = 0;
     document.querySelectorAll('.snake').forEach(div => div.classList.remove('snake'));
     document.querySelector('.apple').classList.remove('apple');
     document.querySelectorAll('.error').forEach(div => div.parentNode.removeChild(div));
