@@ -67,7 +67,7 @@ def eat_apple():
 @app.route('/game-over')
 def game_over():
     session['active_game'] = False
-    if session['now_score'] > session['max_score']:
+    if session['now_score'] > session.get('max_score', 0):
         session['max_score'] = session['now_score']
     session.modified = True
     return jsonify({'is_highscore': is_highscore()})
@@ -112,6 +112,7 @@ def add_to_highscore():
         )
         conn.commit()
         cleanup_database_if_needed()
+        session['now_score'] = 0
         return '', 201
     except connector.Error as err:
         if err.errno == 1062:
