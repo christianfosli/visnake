@@ -1,14 +1,6 @@
 name: Python package
 
-on:
-  push:
-    branches:
-      - master
-
-on:
-  pull_requests:
-    branches:
-      - master
+on: [push, pull_requests]
 
 jobs:
   build:
@@ -17,7 +9,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: 3.7
+        python-version: [3.7]
 
     steps:
     - uses: actions/checkout@v1
