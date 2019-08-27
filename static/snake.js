@@ -7,6 +7,7 @@ let snake = [Math.floor(((gridSize**2)/2)-(gridSize/2))];
 let appleAt = -1;
 let score = 0; // Only to be set by req to server
 let mobileKeyboardStartHtml = '';
+let serverBusyAddingApples = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchScores();
@@ -165,10 +166,19 @@ function addApple() {
     appleAt = Math.ceil(Math.random() * (gridSize**2));
     if (snake.includes(appleAt)) return addApple();
     document.querySelector(`.container div:nth-child(${appleAt})`).classList.add('apple');
-    fetch(`/add-apple?at=${appleAt}`).then(res => (res.ok || showGenericServerError()) );
+    serverBusyAddingApples = true;
+    fetch(`/add-apple?at=${appleAt}`)
+        .then(res => {
+            serverBusyAddingApples = false;
+            if (!res.ok) showGenericServerError()
+        });
 }
 
 function eatApple() {
+    if (serverBusyAddingApples) {
+        setTimeout(eatApple, 300);
+        return;
+    }
     fetch(`eat-apple?at=${appleAt}`)
         .then(res => {
             if (!res.ok) throw Exception();
