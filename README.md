@@ -1,6 +1,9 @@
 Vi Snake
 ----------
 
+## Status
+[![Actions Status](https://github.com/christianfosli/visnake/workflows/Python%20package/badge.svg)](https://github.com/christianfosli/visnake/actions)
+
 ## Prod
 
 The website is live at
