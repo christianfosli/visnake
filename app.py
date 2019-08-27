@@ -8,13 +8,13 @@ from mysql import connector
 from profanity_check import predict
 
 app = Flask(__name__)
-app.secret_key = os.environ['SECRET_KEY']
+app.secret_key = os.environ.get('SECRET_KEY')
 
 DB_CONF = {
     'database': 'visnake',
     'username': os.environ.get('DB_USER', 'visnake-admin'),
-    'pwd': os.environ['DB_PASSWORD'],
-    'host': os.environ['DB_HOST']
+    'pwd': os.environ.get('DB_PASSWORD'),
+    'host': os.environ.get('DB_HOST')
 }
 SCORE_LIMIT = 256
 
