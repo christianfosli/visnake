@@ -1,6 +1,9 @@
 name: Python package
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - fix-deploy
 
 jobs:
   build-test-deploy:
@@ -32,6 +35,7 @@ jobs:
         pip install pytest
         python -m pytest -v
     - uses: azure/webapps-deploy@v1
+      # deploys to azure!
       with:
         app-name: app
         publish-profile: ${{ secrets.azure_deploy }}
