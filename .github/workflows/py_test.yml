@@ -1,12 +1,9 @@
-name: Python package
+name: Python deploy
 
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
-  build-test-deploy:
+  test:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -34,8 +31,3 @@ jobs:
       run: |
         pip install pytest
         python -m pytest -v
-    - uses: azure/webapps-deploy@v1
-      # deploys to azure!
-      with:
-        app-name: app
-        publish-profile: ${{ secrets.azure_deploy }}
