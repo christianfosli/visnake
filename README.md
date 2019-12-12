@@ -2,7 +2,8 @@ Vi Snake
 ----------
 
 ## Status
-[![Actions Status](https://github.com/christianfosli/visnake/workflows/Python%20package/badge.svg)](https://github.com/christianfosli/visnake/actions)
+[![Actions Status](https://github.com/christianfosli/visnake/workflows/Python%20test/badge.svg)](https://github.com/christianfosli/visnake/actions)
+[![Actions Status](https://github.com/christianfosli/visnake/workflows/Python%20deploy/badge.svg)](https://github.com/christianfosli/visnake/actions)
 
 ## Prod
 
