@@ -3,8 +3,7 @@ name: Python package
 on: [push, pull_request]
 
 jobs:
-  build:
-
+  build-test-deploy:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -32,3 +31,7 @@ jobs:
       run: |
         pip install pytest
         python -m pytest -v
+    - uses: azure/appservice-actions/webapp@master
+      with:
+        app-name: app
+        publish-profile: ${{ secrets.azure_deploy }}
