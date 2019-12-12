@@ -1,4 +1,4 @@
-name: Python deploy
+name: Python test
 
 on:
   push:
