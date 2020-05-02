@@ -1,15 +1,24 @@
 Vi Snake
 ----------
 
+Snake with Vim navigation.
+
 ## Status
 [![Actions Status](https://github.com/christianfosli/visnake/workflows/Python%20test/badge.svg)](https://github.com/christianfosli/visnake/actions)
 [![Actions Status](https://github.com/christianfosli/visnake/workflows/Python%20deploy/badge.svg)](https://github.com/christianfosli/visnake/actions)
 
+## Background
+
+I created this when I was doing a web programming class at University of Stavanger.
+We were thought Python Flask, MySQL and JavaScript.
+I later added tests with `pytest`, continuous integration
+and continuous deployments to azure app service.
+
 ## Prod
 
-The website is live at
-<a href="https://visnake.azurewebsites.net/">
-https://visnake.azurewebsites.net/</a>
+The website _may_ be live at
+<a href="https://visnake.azurewebsites.net/"> https://visnake.azurewebsites.net/</a>,
+but it's probably down, as I'm using my precious Azure credits for newer projects.
 
 ## Dev setup
 
